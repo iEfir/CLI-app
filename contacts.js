@@ -30,18 +30,16 @@ async function removeContact(contactId) {
     const parseData = JSON.parse(data);
 
     const contactMatch = parseData.find((contact) => contact.id === contactId);
-    console.log("contactMatch:", contactMatch);
 
-    const filtredContacts = parseData.filter((contact) => {
-      if (!contactMatch.id) return;
-      contact.id !== contactMatch.id;
-    });
-
-    console.log("filtredContacts:", filtredContacts);
+    const filtredContacts = parseData.filter(
+      (contact) => contact.id !== contactMatch.id
+    );
 
     const refreshedList = JSON.stringify(filtredContacts);
 
     await fs.writeFile(contactsPath, refreshedList);
+
+    console.log("parseData:", parseData);
   } catch (err) {
     console.log(err);
   }
