@@ -7,7 +7,7 @@ async function listContacts() {
   try {
     const data = await fs.readFile(contactsPath, "utf-8");
     const parseData = JSON.parse(data);
-    console.log(parseData);
+    console.table(parseData);
   } catch (err) {
     console.log(err);
   }
@@ -40,6 +40,7 @@ async function removeContact(contactId) {
 
     await fs.writeFile(contactsPath, refreshedList);
 
+    console.log(`Contact ${contactMatch.name} has been deleted successfully`);
     listContacts();
   } catch (err) {
     console.log(err);
@@ -59,10 +60,11 @@ async function addContact(name, email, phone) {
 
     parseData.push(newContact);
 
-    console.log("toStringData:", parseData);
     const refreshedList = JSON.stringify(parseData);
 
     await fs.writeFile(contactsPath, refreshedList);
+
+    listContacts();
   } catch (err) {
     console.log(err);
   }
